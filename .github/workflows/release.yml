@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Build release zip
+        run: |
+          mkdir -p dist/yt2lms
+          cp manifest.json popup.html popup.css popup.js icons.svg dist/yt2lms/
+          # Copy icon PNGs if present
+          for f in icon16.png icon32.png icon64.png icon128.png; do
+            [ -f "$f" ] && cp "$f" dist/yt2lms/
+          done
+          cd dist
+          zip -r "../yt2lms-${{ steps.version.outputs.VERSION }}.zip" yt2lms/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: yt2lms-${{ steps.version.outputs.VERSION }}.zip
+          generate_release_notes: true

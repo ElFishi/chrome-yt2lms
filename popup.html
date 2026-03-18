@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Send YouTube music</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- No music on this tab -->
+  <h3 id="noMusic" class="d-none">
+    <svg><use href="icons.svg#i-nomusic" /></svg>
+  </h3>
+
+    <!-- LMS configuration -->
+  <section id="configSection" class="d-none">
+    <h3>LMS Server</h3>
+    <div class="config-form">
+      <input type="url" id="lmsInput" placeholder="http://lms:9000/" spellcheck="false">
+      <div class="config-buttons">
+        <button id="btnTest">Test</button>
+        <button id="btnSave">Save</button>
+      </div>
+      <div id="configStatus" class="config-status"></div>
+    </div>
+  </section>
+
+  <!-- Music interface -->
+  <section id="sendMusic" class="d-none">
+    <h3>
+      YouTube ➜ LMS
+      <button id="btnReconfig" class="reconfig-btn" title="Change LMS server">
+        <svg><use href="icons.svg#i-settings" /></svg>
+      </button>
+    </h3>
+    <div class="segmented-control">
+      <input type="radio" id="list" name="ytType" value="list">
+      <label for="list" class="d-none"><svg><use href="icons.svg#i-playlist" /></svg> Playlist</label>
+      <input type="radio" id="song" name="ytType" value="song">
+      <label for="song" class="d-none"><svg><use href="icons.svg#i-song" /></svg> Song</label>
+    </div>
+    <ul id="playerList">
+      <!-- Download item (environment-specific, comment out before release) -->
+      <li id="download" class="point">
+        <svg><use href="icons.svg#i-download" /></svg>
+        <div class="playerName">Download</div>
+      </li>
+    </ul>
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>

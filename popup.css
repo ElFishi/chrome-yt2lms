@@ -1,0 +1,244 @@
+/* ── Variables ────────────────────────────────────────── */
+
+:root {
+    --bg:        #1e1e1e;
+    --bg-item:   #2d2d30;
+    --bg-hover:  #3e3e42;
+    --bg-active: #505055;
+    --border:    #666;
+    --text:      #d4d4d4;
+    --text-dim:  #666;
+    --text-lit:  #ffffff;
+    --green:     #8ec07c;
+    --red:       #fb4934;
+}
+
+/* ── Reset & base ─────────────────────────────────────── */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    fill: var(--text);
+    text-align: center;
+    font-size: 16.5px;
+    font-weight: 400;
+    min-width: 7em;
+}
+
+svg {
+    width: 36px;
+    height: 36px;
+}
+
+/* ── Headings ─────────────────────────────────────────── */
+
+h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    font-size: inherit;
+}
+
+/* ── Player list ──────────────────────────────────────── */
+
+ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    padding: 6px 16px;
+    background-color: var(--bg-item);
+    fill: var(--text);
+    border-top: 0.8px solid var(--border);
+    transition: background-color 0.2s ease;
+    cursor: default;
+    overflow: hidden;
+}
+
+ul li:last-of-type {
+    border-bottom: 0.8px solid var(--border);
+}
+
+li:hover  { background-color: var(--bg-hover); }
+li:active { background-color: var(--bg-active); }
+
+li svg {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+}
+
+li svg.cmd {
+    width: 28px;
+    height: 28px;
+    margin: 0 2px;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+li:hover svg.cmd    { visibility: visible; }
+li svg.cmd:hover    { fill: var(--text-lit); }
+
+.playerName {
+    margin-right: auto;
+    padding: 0 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.point {
+    cursor: pointer;
+}
+
+.point:hover {
+    color: var(--text-lit);
+    fill: var(--text-lit);
+}
+
+/* ── Utility ──────────────────────────────────────────── */
+
+.d-none { display: none !important; }
+
+/* ── Segmented control ────────────────────────────────── */
+
+.segmented-control {
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    margin-bottom: 20px;
+    background-color: var(--bg-item);
+    color: var(--text);
+    fill: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.segmented-control input[type="radio"] { display: none; }
+
+.segmented-control label {
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.segmented-control label svg {
+    width: 22px;
+    height: 22px;
+    vertical-align: top;
+}
+
+.segmented-control input[type="radio"]:checked + label {
+    background-color: var(--bg-active);
+    color: var(--text-lit);
+    fill: var(--text-lit);
+}
+
+.segmented-control label:hover { background-color: var(--bg-hover); }
+
+/* ── Config section ───────────────────────────────────── */
+
+#configSection { min-width: 280px; }
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px 20px;
+}
+
+.config-form input[type="url"] {
+    background-color: var(--bg-item);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font: 14px/1 inherit;
+    outline: none;
+    width: 100%;
+}
+
+.config-form input[type="url"]:focus { border-color: #999; }
+
+.config-buttons { display: flex; gap: 8px; }
+
+.config-buttons button {
+    flex: 1;
+    background-color: var(--bg-item);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font: 14px/1 inherit;
+    transition: background-color 0.2s ease;
+}
+
+.config-buttons button:hover  { background-color: var(--bg-hover);  color: var(--text-lit); }
+.config-buttons button:active { background-color: var(--bg-active); }
+
+.config-status {
+    min-height: 1.2em;
+    font-size: 13px;
+    text-align: left;
+}
+
+.config-status--ok    { color: var(--green); }
+.config-status--error { color: var(--red); }
+
+/* ── Reconfigure button ───────────────────────────────── */
+
+.reconfig-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    fill: var(--text-dim);
+    transition: fill 0.2s ease;
+}
+
+.reconfig-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.reconfig-btn:hover { fill: var(--text-lit); }
+
+.reconfig-btn svg {
+    transition: fill 0.2s ease;
+}
+
+.reconfig-btn:hover svg {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Inline error ─────────────────────────────────────── */
+
+.error-msg {
+    padding: 6px 16px;
+    background-color: var(--bg-item);
+    color: var(--red);
+    font-size: 13px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
