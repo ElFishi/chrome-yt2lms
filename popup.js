@@ -1,4 +1,5 @@
-const debug = true; // keeps popup from closing
+const debug = false;
+//const debug = true;     // keeps popup from closing
 
 // ─── Storage ────────────────────────────────────────────────────────────────
 
@@ -76,7 +77,6 @@ async function sendToLMS(lmsUrl, action, playerId, ytParams) {
     }),
   });
   if (!response.ok) throw new Error(`LMS error: ${response.statusText}`);
-  if (!debug) window.close();
 }
 
 // ─── YouTube helpers ──────────────────────────────────────────────────────────
@@ -177,6 +177,17 @@ async function renderPlayerList(lmsUrl, players, ytParams) {
       svg.addEventListener('click', async () => {
         try {
           await sendToLMS(lmsUrl, action, player.playerid, ytParams);
+          // Swap to check icon, close after 0.5s, then revert in case close is suppressed (debug).
+          svg.querySelector('use').setAttribute('href', 'icons.svg#i-check');
+          svg.classList.add('success');
+          setTimeout(() => {
+            if (!debug) {
+              window.close();
+            } else {
+              // svg.querySelector('use').setAttribute('href', `icons.svg#${iconId}`);
+              // svg.classList.remove('success');
+            }
+          }, 500);
         } catch (err) {
           console.error('Send to LMS failed:', err);
           showError('Failed to reach player. Is LMS still available?');
@@ -204,7 +215,6 @@ async function isYouTubeDLAvailable(lmsUrl) {
     });
     if (!response.ok) return false;
     const data = await response.json();
-    console.log('YouTubeDL probe response:', JSON.stringify(data));
     return data.result?._can === 1;
   } catch {
     return false;
@@ -235,8 +245,13 @@ async function downloadViaLMS(lmsUrl, ytParams) {
 
   if (!response.ok) throw new Error(`LMS error: ${response.statusText}`);
 
-  // Open the download log in a new tab so the user can watch progress.
+  const data = await response.json();
+  if (!data.result?.pid) {
+    throw new Error(data.result?.message ?? 'Download failed to start');
+  }
+
   chrome.tabs.create({ url: `${lmsUrl}plugins/YouTubeDL/downloadlog.html` });
+  if (!debug) window.close();
 }
 
 function initDownload(lmsUrl, ytParams) {
@@ -246,12 +261,12 @@ function initDownload(lmsUrl, ytParams) {
   download.parentNode.replaceChild(fresh, download);
 
   fresh.addEventListener('click', async () => {
-  if (fresh.classList.contains('disabled')) return;
+    if (fresh.classList.contains('disabled')) return;
     try {
       await downloadViaLMS(lmsUrl, ytParams);
     } catch (err) {
       console.error('Download failed:', err);
-      showError('Failed to start download. Is the YouTubeDL plugin installed?');
+      showError(err.message); 
     }
   });
 }

@@ -1,16 +1,16 @@
 /* ── Variables ────────────────────────────────────────── */
 
 :root {
-    --bg:        #1e1e1e;
-    --bg-item:   #2d2d30;
-    --bg-hover:  #3e3e42;
+    --bg: #1e1e1e;
+    --bg-item: #2d2d30;
+    --bg-hover: #3e3e42;
     --bg-active: #505055;
-    --border:    #666;
-    --text:      #d4d4d4;
-    --text-dim:  #666;
-    --text-lit:  #ffffff;
-    --green:     #8ec07c;
-    --red:       #fb4934;
+    --border: #666;
+    --text: #d4d4d4;
+    --text-dim: #666;
+    --text-lit: #ffffff;
+    --green: #8ec07c;
+    --red: #fb4934;
 }
 
 /* ── Reset & base ─────────────────────────────────────── */
@@ -51,8 +51,8 @@ h3 {
 /* ── Download button ──────────────────────────────────── */
 
 #download.disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+    opacity: 0.35;
+    cursor: not-allowed;
 }
 
 /* ── Player list ──────────────────────────────────────── */
@@ -78,8 +78,13 @@ ul li:last-of-type {
     border-bottom: 0.8px solid var(--border);
 }
 
-li:hover  { background-color: var(--bg-hover); }
-li:active { background-color: var(--bg-active); }
+li:hover {
+    background-color: var(--bg-hover);
+}
+
+li:active {
+    background-color: var(--bg-active);
+}
 
 li svg {
     width: 36px;
@@ -95,8 +100,17 @@ li svg.cmd {
     cursor: pointer;
 }
 
-li:hover svg.cmd    { visibility: visible; }
-li svg.cmd:hover    { fill: var(--text-lit); }
+li:hover svg.cmd {
+    visibility: visible;
+}
+
+li svg.cmd.success {
+    fill: var(--green);
+}
+
+li svg.cmd:not(.success):hover {
+    fill: var(--text-lit);
+}
 
 .playerName {
     margin-right: auto;
@@ -118,7 +132,9 @@ li svg.cmd:hover    { fill: var(--text-lit); }
 
 /* ── Utility ──────────────────────────────────────────── */
 
-.d-none { display: none !important; }
+.d-none {
+    display: none !important;
+}
 
 /* ── Segmented control ────────────────────────────────── */
 
@@ -135,7 +151,9 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     overflow: hidden;
 }
 
-.segmented-control input[type="radio"] { display: none; }
+.segmented-control input[type="radio"] {
+    display: none;
+}
 
 .segmented-control label {
     padding: 3px 10px;
@@ -149,17 +167,21 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     vertical-align: top;
 }
 
-.segmented-control input[type="radio"]:checked + label {
+.segmented-control input[type="radio"]:checked+label {
     background-color: var(--bg-active);
     color: var(--text-lit);
     fill: var(--text-lit);
 }
 
-.segmented-control label:hover { background-color: var(--bg-hover); }
+.segmented-control label:hover {
+    background-color: var(--bg-hover);
+}
 
 /* ── Config section ───────────────────────────────────── */
 
-#configSection { min-width: 280px; }
+#configSection {
+    min-width: 280px;
+}
 
 .config-form {
     display: flex;
@@ -179,9 +201,14 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     width: 100%;
 }
 
-.config-form input[type="url"]:focus { border-color: #999; }
+.config-form input[type="url"]:focus {
+    border-color: #999;
+}
 
-.config-buttons { display: flex; gap: 8px; }
+.config-buttons {
+    display: flex;
+    gap: 8px;
+}
 
 .config-buttons button {
     flex: 1;
@@ -195,8 +222,14 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     transition: background-color 0.2s ease;
 }
 
-.config-buttons button:hover  { background-color: var(--bg-hover);  color: var(--text-lit); }
-.config-buttons button:active { background-color: var(--bg-active); }
+.config-buttons button:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-lit);
+}
+
+.config-buttons button:active {
+    background-color: var(--bg-active);
+}
 
 .config-status {
     min-height: 1.2em;
@@ -204,8 +237,13 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     text-align: left;
 }
 
-.config-status--ok    { color: var(--green); }
-.config-status--error { color: var(--red); }
+.config-status--ok {
+    color: var(--green);
+}
+
+.config-status--error {
+    color: var(--red);
+}
 
 /* ── Reconfigure button ───────────────────────────────── */
 
@@ -225,7 +263,9 @@ li svg.cmd:hover    { fill: var(--text-lit); }
     height: 20px;
 }
 
-.reconfig-btn:hover { fill: var(--text-lit); }
+.reconfig-btn:hover {
+    fill: var(--text-lit);
+}
 
 .reconfig-btn svg {
     transition: fill 0.2s ease;
@@ -236,7 +276,9 @@ li svg.cmd:hover    { fill: var(--text-lit); }
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ── Inline error ─────────────────────────────────────── */

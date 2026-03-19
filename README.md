@@ -8,6 +8,7 @@ While you're on a YouTube or YouTube Music page, click the extension icon. If LM
 
 - **Song** — sends the current video as a single track
 - **Playlist** — sends the full playlist
+- **Download** — downloads the song or playlist to your music library via yt-dlp (requires the [YouTubeDL plugin](https://github.com/ElFishi/LMS-YouTubeDL))
 - Works with both `youtube.com` and `music.youtube.com`
 - Requires the [YouTube plugin for LMS](https://github.com/philippe44/LMS-YouTube)
 
@@ -23,6 +24,7 @@ While you're on a YouTube or YouTube Music page, click the extension icon. If LM
 - [Lyrion Music Server](https://lyrion.org/) running and reachable from your browser
 - [LMS YouTube plugin](https://github.com/philippe44/LMS-YouTube) installed in LMS
 - At least one LMS player connected
+- [YouTubeDL plugin](https://github.com/ElFishi/LMS-YouTubeDL) *(optional — required for the Download button)*
 
 ## Installation
 
@@ -58,6 +60,16 @@ The URL is stored locally in Chrome and remembered across sessions. To change it
 3. If both a song ID and playlist ID are present in the URL, select **Song** or **Playlist** using the toggle
 4. Click a player name to **play immediately**, or hover and use the **＋** button to **add to queue**
 
+### Download
+
+If the [YouTubeDL plugin](https://github.com/ElFishi/LMS-YouTubeDL) is installed in LMS, a **Download** button appears at the top of the player list. The extension checks for the plugin automatically — the button is greyed out and inactive if the plugin is not detected.
+
+Clicking Download:
+1. Sends a download request to LMS via JSON-RPC
+2. Opens the yt-dlp download log in a new browser tab, which auto-refreshes every 2 seconds so you can watch the progress
+
+The download runs as a background process in LMS. Playback is unaffected.
+
 ## Updating
 
 When a new release is available:
@@ -73,6 +85,8 @@ When a new release is available:
 **Config screen appears every time** — LMS is not reachable at the saved URL. Check that LMS is running and that your browser can reach the address (try opening it directly in a tab).
 
 **Players appear but nothing plays** — make sure the [LMS YouTube plugin](https://github.com/philippe44/LMS-YouTube) is installed. Without it, LMS cannot resolve YouTube URLs.
+
+**Download button is greyed out** — the [YouTubeDL plugin](https://github.com/ElFishi/LMS-YouTubeDL) is not installed or not detected. Install it in LMS and reload the popup.
 
 **After updating Chrome, the extension disappears** — Chrome occasionally disables manually-loaded extensions after major updates. Go to `chrome://extensions`, re-enable it, or reload the unpacked folder.
 
