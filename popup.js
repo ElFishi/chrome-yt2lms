@@ -21,6 +21,13 @@ async function clearSavedLMSServer() {
   });
 }
 
+async function requestLMSPermission(url) {
+  const origin = new URL(url).origin + '/*';
+  return new Promise(resolve => {
+    chrome.permissions.request({ origins: [origin] }, resolve);
+  });
+}
+
 // ─── LMS API ─────────────────────────────────────────────────────────────────
 
 async function testLMSServer(url) {
@@ -184,8 +191,8 @@ async function renderPlayerList(lmsUrl, players, ytParams) {
             if (!debug) {
               window.close();
             } else {
-              // svg.querySelector('use').setAttribute('href', `icons.svg#${iconId}`);
-              // svg.classList.remove('success');
+              svg.querySelector('use').setAttribute('href', `icons.svg#${iconId}`);
+              svg.classList.remove('success');
             }
           }, 500);
         } catch (err) {
@@ -328,6 +335,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!raw) { setConfigStatus('Please enter a URL.', true); return; }
     setConfigStatus('Testing…');
     try {
+      const granted = await requestLMSPermission(raw);
+      if (!granted) { setConfigStatus('Permission denied.', true); return; }
       const normalized = await testLMSServer(raw);
       await saveLMSServer(normalized);
       setConfigStatus('Saved ✓');
