@@ -1,4 +1,4 @@
-const debug = false; // keeps popup from closing
+const debug = true; // keeps popup from closing
 
 // ─── Storage ────────────────────────────────────────────────────────────────
 
@@ -123,7 +123,7 @@ function showError(msg) {
   document.body.insertBefore(div, document.body.firstChild);
 }
 
-function renderPlayerList(lmsUrl, players, ytParams) {
+async function renderPlayerList(lmsUrl, players, ytParams) {
   if (ytParams.has('v')) {
     document.querySelector('label[for="song"]').classList.remove('d-none');
     document.getElementById('song').checked = true;
@@ -135,6 +135,17 @@ function renderPlayerList(lmsUrl, players, ytParams) {
 
   document.getElementById('sendMusic').classList.remove('d-none');
   document.getElementById('configSection').classList.add('d-none');
+
+  // Check YouTubeDL availability and style the download button accordingly.
+  const dlAvailable = await isYouTubeDLAvailable(lmsUrl);
+  const downloadLi = document.getElementById('download');
+  if (dlAvailable) {
+    downloadLi.classList.remove('disabled');
+    downloadLi.title = '';
+  } else {
+    downloadLi.classList.add('disabled');
+    downloadLi.title = 'YouTubeDL plugin not available';
+  }
 
   const playerList = document.getElementById('playerList');
   // Remove all player entries, keeping only the Download item
@@ -180,6 +191,26 @@ function renderPlayerList(lmsUrl, players, ytParams) {
 
 // ─── Download item ────────────────────────────────────────────────────────────
 
+async function isYouTubeDLAvailable(lmsUrl) {
+  try {
+    const response = await fetch(`${lmsUrl}jsonrpc.js`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: 1,
+        method: 'slim.request',
+        params: ['', ['can', 'youtube', 'download', '?']],
+      }),
+    });
+    if (!response.ok) return false;
+    const data = await response.json();
+    console.log('YouTubeDL probe response:', JSON.stringify(data));
+    return data.result?._can === 1;
+  } catch {
+    return false;
+  }
+}
+
 async function downloadViaLMS(lmsUrl, ytParams) {
   const selected = document.querySelector('input[type=radio][name=ytType]:checked')?.value;
   let ytUrl;
@@ -215,6 +246,7 @@ function initDownload(lmsUrl, ytParams) {
   download.parentNode.replaceChild(fresh, download);
 
   fresh.addEventListener('click', async () => {
+  if (fresh.classList.contains('disabled')) return;
     try {
       await downloadViaLMS(lmsUrl, ytParams);
     } catch (err) {

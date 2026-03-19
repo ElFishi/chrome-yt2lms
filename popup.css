@@ -48,6 +48,13 @@ h3 {
     font-size: inherit;
 }
 
+/* ── Download button ──────────────────────────────────── */
+
+#download.disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 /* ── Player list ──────────────────────────────────────── */
 
 ul {
