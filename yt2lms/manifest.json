@@ -8,11 +8,7 @@
     "storage"
   ],
   "host_permissions": [
-    "https://*.youtube.com/*"
-  ],
-  "optional_host_permissions": [
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html"

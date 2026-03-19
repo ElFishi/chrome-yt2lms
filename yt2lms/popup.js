@@ -1,5 +1,6 @@
 const debug = false;
-//const debug = true;     // keeps popup from closing
+// const debug = true;     // keeps popup from closing
+// you can also "inspect popup" with right mouseclick on the extension icon in the header bar
 
 // ─── Storage ────────────────────────────────────────────────────────────────
 
@@ -18,13 +19,6 @@ async function saveLMSServer(url) {
 async function clearSavedLMSServer() {
   return new Promise(resolve => {
     chrome.storage.local.remove('lmsServer', resolve);
-  });
-}
-
-async function requestLMSPermission(url) {
-  const origin = new URL(url).origin + '/*';
-  return new Promise(resolve => {
-    chrome.permissions.request({ origins: [origin] }, resolve);
   });
 }
 
@@ -335,8 +329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!raw) { setConfigStatus('Please enter a URL.', true); return; }
     setConfigStatus('Testing…');
     try {
-      const granted = await requestLMSPermission(raw);
-      if (!granted) { setConfigStatus('Permission denied.', true); return; }
       const normalized = await testLMSServer(raw);
       await saveLMSServer(normalized);
       setConfigStatus('Saved ✓');
