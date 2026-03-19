@@ -1,4 +1,5 @@
 # yt2lms
+![Status](https://img.shields.io/badge/status-experimental-orange) ![Platform](https://img.shields.io/badge/platform-Chrome-4285F4?logo=googlechrome&logoColor=white) ![LMS](https://img.shields.io/badge/LMS-7.7%2B-informational) ![YouTube](https://img.shields.io/badge/YouTube-plugin%20required-FF0000?logo=youtube&logoColor=white) ![License](https://img.shields.io/badge/license-MIT-green)
 
 A Chrome extension that sends a YouTube song or playlist from your current browser tab directly to a [Lyrion Music Server (LMS)](https://lyrion.org/) player — one click, no copy-pasting URLs.
 
