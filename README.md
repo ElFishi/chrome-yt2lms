@@ -33,8 +33,9 @@ While you're on a YouTube or YouTube Music page, click the extension icon. If LM
 /
   README.md
   LICENSE
-  screenshots/
+  yt2lms.shortcut
   .github/workflows/release.yml
+  screenshots/
   yt2lms/
     manifest.json
     popup.html
@@ -46,7 +47,7 @@ While you're on a YouTube or YouTube Music page, click the extension icon. If LM
     icon128.png
 ```
 
-The `yt2lms/` folder is the extension itself. Everything outside it is repository metadata.
+The `yt2lms/` folder is the extension itself. `yt2lms.shortcut` is an iOS shortcut which does the same as the crome extension. Everything else is repository metadata.
 
 ## Installation
 
