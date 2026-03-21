@@ -240,7 +240,7 @@ async function downloadViaLMS(lmsUrl, ytParams) {
     body: JSON.stringify({
       id: 1,
       method: 'slim.request',
-      params: ['', ['youtube', 'download', `url:${ytUrl}`]],
+      params: ['', ['youtube', 'download', `${ytUrl}`]],
     }),
   });
 
